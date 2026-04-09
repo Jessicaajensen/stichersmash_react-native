@@ -1,4 +1,5 @@
-import { Text, View,  StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
+import { Link } from 'expo-router';
 
 export default function Index() {
   return (
@@ -20,5 +21,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#fff',
+  },
+  button: {
+    marginTop: 12,
+    color: '#fff',
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
 });
