@@ -1,6 +1,6 @@
 import { employees } from "./data/employees";
 import { Link } from "expo-router";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text } from "react-native";
 
 export default function AboutScreen() {
   return (

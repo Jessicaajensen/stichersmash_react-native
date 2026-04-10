@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ImageSourcePropType, View, StyleSheet, Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { captureRef } from 'react-native-view-shot';
-import domtoimage from 'dom-to-image';
+// `dom-to-image` is loaded dynamically on web only
 
 import Button from '@/components/Button';
 import ImageViewer from '@/components/ImageViewer';
@@ -29,7 +29,7 @@ export default function Index() {
     if (!permissionResponse?.granted) {
       requestPermission();
     }
-  }, []);
+  }, [permissionResponse?.granted, requestPermission]);
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -75,13 +75,16 @@ export default function Index() {
       }
     } else {
       try {
-        const dataUrl = await domtoimage.toJpeg(imageRef.current, {
+        if (!imageRef.current) return;
+
+        const domtoimage = (await import('dom-to-image')).default;
+        const dataUrl = await domtoimage.toJpeg(imageRef.current as unknown as Node, {
           quality: 0.95,
           width: 320,
           height: 440,
         });
 
-        let link = document.createElement('a');
+        const link = document.createElement('a');
         link.download = 'sticker-smash.jpeg';
         link.href = dataUrl;
         link.click();
